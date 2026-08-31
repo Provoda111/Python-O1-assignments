@@ -4,15 +4,22 @@
 import os
 import time
 
+# This class is responsible for player's inventory interaction
+# 
 class Inventory:
     inventoryItems = []
     allowedItems = ["Dagger", "Sword", "Shield", "Iron Armor", "Diamond Sword"]
     def AddItem(itemName):
-        f"Added an item {itemName} to player's inventory"
+        print(f"Added an item {itemName} to player's inventory")
     def ListAllowedItems():
         print()
     def ListInventoryItems():
         print()
+    def RemoveItem(itemName):
+        print()
+    def ClearInventory():
+        print()
+    
 
 class UI:
     def DrawMainMenu(self):
@@ -39,18 +46,33 @@ class UI:
             for i in range(len(inventory.allowedItems)):
                 print(f" {i+1} - {inventory.allowedItems[i]}")
             time.sleep(2)
-            playerInput = input("\nMitä valitset?\n").strip().lower()
-            match playerInput:
-                case [*inventory] if str(playerInput) in inventory.allowedItems:
-                    print("Hei!")
+            playerInput = input("\nMitä valitset?\n").strip()
+            if playerInput in inventory.inventoryItems:
+                print(f"You already have {playerInput}")
+            
+            else:
+                if playerInput in inventory.allowedItems:
+                    print("Item is added")
+                    inventory.inventoryItems.append(playerInput)
+                else:
+                    print("Item isn't added")
+        else:
+            print("At current time there is no available items")
+            print("Bringing you back to main menu")
+            self.DrawMainMenu()
 
     def InventoryUI():
         inventory = Inventory()
-        print("Olet tavaraluettelossa.\nKirjoitan alas sinun hallussa olevat tavarat\n")
+        print("Olet tavaraluettelossa.\nKirjoitan sinun hallussa olevat tavarat\n")
         if inventory.inventoryItems.count() >= 1:
             print()
-        for i in range(len(inventory.inventoryItems)):
-            print()
+            for i in inventory.allowedItems:
+                print(i)
+        else:
+            print("Sinulla ei ole tavaroita")
+            print("Palautan sinut takaisin muutaman sekunnin kuluttua")
+            time.sleep(1.5)
+            ui.DrawMainMenu()
 
 class Player:
     def __init__(self, name, age):
@@ -64,12 +86,14 @@ class Player:
             os.abort()
         else:
             print(f"Hienoa! Kirjauduit sisään. Sinun nimesi on {playerName} ja ikäsi on {playerAge}.\n")
-        time.sleep(2)
+        time.sleep(1.5)
 
 ui = UI()
 # inventory = Inventory()
 
 print("Hei! Tervetuloa peliin. Aloitetaan tietojen keräämisestä.")
+
+ui.cont()
 
 playerName = str(input("Kirjoita oma nimesi:\n"))
 playerAge = int(input("Kirjoita oma ikä:\n"))

@@ -17,5 +17,3 @@ Moduuli10 on 11. Periytyminen
 
 Koska tehtävien "12. Ohjelman rakenne" ja "13. Tiedostonkäsittely" sisältö liittyy python "peli" projektiin, niin niille ei tule oma kansio, vaan ne on liitetty peliprojektiin.
 Peliprojektilla on oma kansio "peliprojekti". Päivittyy riippumaatta siitä, teenkö tietyt moduulit pl. 12 ja 13 vai en.
-
-$\pi r^2$

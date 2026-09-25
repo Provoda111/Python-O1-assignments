@@ -1,6 +1,6 @@
 import random
 
-print("Hello! This program throws a dice, and tells you the result, but to win result must be "
+print("Hello! This program throws a dice, and tells you the result, but to win the result must be "
       + "a number 6")
 
 def ThrowDice():

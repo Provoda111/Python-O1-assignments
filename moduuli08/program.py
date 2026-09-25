@@ -1,11 +1,11 @@
 import random
 
 class Car:
-    def __init__(self, regNumber, topSpeed, currentSpeed = 0, traveledDistance = 0):
+    def __init__(self, regNumber, topSpeed):
         self.regNumber = regNumber
         self.topSpeed = topSpeed
-        self.currentSpeed = currentSpeed
-        self.traveledDistance = traveledDistance
+        self.currentSpeed = 0
+        self.traveledDistance = 0
         print(f"Car\nRegistration number: {regNumber}\nTop speed: {topSpeed}")
         pass
 

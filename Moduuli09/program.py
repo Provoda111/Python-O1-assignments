@@ -35,10 +35,10 @@ class Hissi:
 
 
 class Apartment:
-    def __init__(self, elevators, highestFloor, lowestFloor = 0,):
+    def __init__(self, highestFloor, lowestFloor = 0):
         self.lowestFloor = lowestFloor
         self.highestFloor = highestFloor
-        self.elevators = elevators
+        self.elevators = []
         pass
 
     # Adds a new elevator to apartment
@@ -66,6 +66,8 @@ print(kone.ReturnActualFloor())
 #kone.GoToFloor(5)
 #kone.GoToFloor(3)
 #kone.GoToFloor(7)
-house = Apartment([kone, kone2], 6)
+house = Apartment(6)
+house.AddNewElevator(kone)
+house.AddNewElevator(kone2)
 house.UseElevator(3, 1)
 house.FireAlarm()

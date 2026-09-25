@@ -30,9 +30,9 @@ print("Hei! Tässä ohjelmassa kysyn sinulta lentoasemien tietoja (Kaupunki, ICA
 
 while True:
     userInput = input("Mitä valitset:\n1 - Lisätä uuden lentoaseman\n2 - Hakea jo olevan\n3 - Lopeta\n")
-    if userInput == "1":
+    if userInput == "1" or userInput == "Lisää":
         AddNewAirport()
-    if userInput == "2":
+    if userInput == "2" or userInput == "Hakea":
         FindAirport()
-    if userInput == "3":
+    if userInput == "3" or userInput == "Lopeta":
         break

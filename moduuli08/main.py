@@ -1,4 +1,5 @@
 import random
+from Race import Race
 
 class Car:
     def __init__(self, regNumber, topSpeed):
@@ -6,8 +7,6 @@ class Car:
         self.topSpeed = topSpeed
         self.currentSpeed = 0
         self.traveledDistance = 0
-        print(f"Car\nRegistration number: {regNumber}\nTop speed: {topSpeed}")
-        pass
 
     def Accelerate(self, velocity):
         if velocity >= 1 and velocity <= self.topSpeed:
@@ -28,33 +27,38 @@ class Car:
             else:
                 self.currentSpeed = self.currentSpeed - abs(velocity)
         print(f"Car current speed: {self.currentSpeed} Km/h\n")
-        pass
 
     def Drive(self, hours):
         if self.currentSpeed >= 1:
             self.traveledDistance = self.traveledDistance + (self.currentSpeed * hours)
             print(f"\nCar has driven {hours} hours at speed {self.currentSpeed} Km/h")
             print(f"Car has driven at this amount of time {self.traveledDistance} Km\n")
-            pass
+            if type(self) == ElectricCar:
+                self.batteryCapacity -= self.currentSpeed / hours / 25
+                print(f"The car has used {self.currentSpeed / hours / 25} kW of power")
+            if type(self) == FuelCar:
+                self.fuelCapacity -= self.currentSpeed / hours / 25
+                print(f"The car has used {self.currentSpeed / hours / 25} l of fuel")
         else:
             print(f"Car didn't drive because current speed is 0")
-        pass
 
-cars = []
+class ElectricCar(Car):
+    def __init__(self, regNumber, topSpeed, batteryCapacity):
+        super().__init__(regNumber, topSpeed)
+        self.batteryCapacity = batteryCapacity
+        print(f"Car\nRegistration number: {self.regNumber}\nTop speed: {self.topSpeed} Km/h\nBattery Capacity: {self.batteryCapacity} kW")
 
-# This for-loop creates 10 car
-for i in range(10):
-    car = Car(f"ABC-{i + 1}", random.randint(100, 200))
-    cars.append(car)
 
-someoneWon = False
+class FuelCar(Car):
+    def __init__(self, regNumber, topSpeed, fuelCapacity):
+        super().__init__(regNumber, topSpeed)
+        self.fuelCapacity = fuelCapacity
+        print(f"Car\nRegistration number: {self.regNumber}\nTop speed: {self.topSpeed} Km/h\nFuel Capacity: {self.fuelCapacity} l")
+    pass
 
-while not someoneWon:
-    for car in cars:
-        car.Accelerate(random.randint(-10, 15))
-        car.Drive(1)
-
-        if car.traveledDistance >= 10000:
-            print(f"Car with a registration number {car.regNumber} has won the race!")
-            someoneWon = True
-            break
+if __name__ == "__main__":
+    romu_ralli = Race("Romuralli", 8000)
+    # This for-loop creates 10 car
+    for i in range(10):
+        romu_ralli.AddParticipant(Car(f"ABC-{i + 1}", random.randint(100, 200)))
+    romu_ralli.StartRace()

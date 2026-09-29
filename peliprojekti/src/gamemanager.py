@@ -1,11 +1,13 @@
 from player import Player
 from ui import UI
+from itemshop import ItemShop
 
 class GameManager:
     ## TODO THINK ABOUT PLAYERS LIST
     def __init__(self):
         self.players = []
         self.ui_control = UI()
+        self.itemShop = ItemShop()
 
     def LogIn(self):
         print("Let's start with creating your character")
@@ -23,22 +25,19 @@ class GameManager:
                 print("Error in name or age input, try again")
             except:
                 print("Unknown error happened")
-        self.ui_control.DrawMainMenu()
-        
             
     def AddPlayer(self, playerNameInput, playerAgeInput):
         newPlayer = Player(playerNameInput, playerAgeInput)
         newPlayer.playerInfo = {
             "Name" : playerNameInput,
-            "Age"  : playerAgeInput,
-            }
+            "Age"  : playerAgeInput }
         self.players.append(newPlayer)
-        
+        self.StartGame(newPlayer)
 
-    def DeletePlayer(self, targerPlayet):
-        if targerPlayet in self.players:
-            print(f"Deleting a player {targerPlayet["Name"]}")
+    def DeletePlayer(self, targetPlayer):
+        if targetPlayer in self.players:
+            print(f"Deleting a player {targetPlayer["Name"]}")
 
-    # Returns to an admin target player's inventory
-    def CheckPlayerInventory(self, targetPlayer):
-        pass
+    def StartGame(self, player):
+        print("Starting the game")
+        self.ui_control.DrawMainMenu(player, self)

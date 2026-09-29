@@ -1,28 +1,32 @@
 import time
+import os
 
 class UI:
-    def DrawMainMenu(self):
-        print("Valitse mitä haluat tehdä:")
+    def DrawMainMenu(self, player, gameManager):
+        print("-----MAIN MENU-----")
         print("1 - Add item to inventory")
         print("2 - Check your inventory")
         print("3 - Delete item from your inventory")
         print("4 - Leave the game")
-        playerInput = input("\n")
-        match playerInput:
+        input = input("What will you choose? \n")
+        match input:
             case 1 | "1":
                 print("You chose 1 - Add item to your inventory\n")
-                self.AddItemUI()
+                self.AddItemUI(gameManager.itemShop, player)
             case 2 | "2":
                 print("You chose 2 - Check your inventory\n")
+                self.InventoryUI()
             case 3 | "3":
                 print("You chose 3 - Delete item from your inventory\n")
             case 4 | "4":
                 print("You chose 4 - Leave the game\n")
+                os.abort()
             case "Admin" | "admin":
                 print("You've entered admin mode")
+                self.DrawAdminMenu()
 
     def AddItemUI(self, itemShop, playerInventory): 
-        print("Olet tavaroiden hanke sivussa.\nListan sallittuja tavaroita sinulle")
+        print("-----ITEM SHOP-----")
 
         # Checks if there is any allowed items in shop
         if len(itemShop.allowedItems) >= 1:
@@ -54,17 +58,17 @@ class UI:
             time.sleep(1.5)
             self.DrawMainMenu()
 
-    def InventoryUI(inventory):
+    def InventoryUI(self, player):
         print("You are checking your inventory\nI'll list all of your items\n")
-        if inventory.inventoryItems.count() >= 1:
-            print()
-            for i in inventory.allowedItems:
-                print(f"{i.index + 1} - {i}")
+        if player.inventory.count() >= 1:
+            pass
         else:
-            print("Sinulla ei ole tavaroita")
-            print("Palautan sinut takaisin muutaman sekunnin kuluttua")
+            print("Unfortunately you don't have any items")
             time.sleep(1.8)
-            #ui.DrawMainMenu()
+            self.DrawMainMenu()
     
     def DrawAdminMenu(self):
+        print("-----ADMIN MENU-----")
+        print("1 - Check target player's inventory:")
+        print("Leave admin menu")
         pass

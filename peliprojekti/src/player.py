@@ -10,7 +10,3 @@ class Player:
 
     def Attack(self, weapon):
         pass
-
-    
-    
-

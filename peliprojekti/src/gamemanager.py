@@ -23,8 +23,8 @@ class GameManager:
                     print("Can't create an account for you")
             except ValueError:
                 print("Error in name or age input, try again")
-            except:
-                print("Unknown error happened")
+            #except:
+            #    print("Unknown error happened")
             
     def AddPlayer(self, playerNameInput, playerAgeInput):
         newPlayer = Player(playerNameInput, playerAgeInput)

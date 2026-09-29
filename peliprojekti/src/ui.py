@@ -8,8 +8,8 @@ class UI:
         print("2 - Check your inventory")
         print("3 - Delete item from your inventory")
         print("4 - Leave the game")
-        input = input("What will you choose? \n")
-        match input:
+        playerChoice = input("What will you choose? \n")
+        match playerChoice:
             case 1 | "1":
                 print("You chose 1 - Add item to your inventory\n")
                 self.AddItemUI(gameManager.itemShop, player)
@@ -25,33 +25,34 @@ class UI:
                 print("You've entered admin mode")
                 self.DrawAdminMenu()
 
-    def AddItemUI(self, itemShop, playerInventory): 
+    # Draws a player available items in item shop
+    def AddItemUI(self, itemShop, player): 
         print("-----ITEM SHOP-----")
 
         # Checks if there is any allowed items in shop
-        if len(itemShop.allowedItems) >= 1:
+        if len(itemShop.availableItems) >= 1:
 
             #Prints every allowed item (index (index + 1) - (item name)) 
-            for i in range(len(itemShop.allowedItems)):
-                print(f" {i+1} - {itemShop.allowedItems[i]}")
+            for i in range(len(itemShop.availableItems)):
+                #TODO draw item description
+                print(f" {i+1} - {itemShop.availableItems[i]}")
             time.sleep(2)
-            playerInput = input("\nMitä valitset?\n")
+            itemInput = input("\nMitä valitset?\n")
 
-            # Prevents player getting asked item twice
-            # No logic, just balance 😂
-            if playerInput in playerInventory.inventoryItems:
-                print(f"You already have {playerInput}")
+            # Prevents player getting asked item twice for balance😂
+            if itemInput in player.inventory.items:
+                print(f"You already have {itemInput}")
 
             # If player doesn't have asked item, it will be added
             else:
                 # Checks if the asked item by player is in allowed items
-                if playerInput in itemShop.allowedItems:
-                    print("Item is added")
-                    playerInventory.inventoryItems.append(playerInput)
+                if itemInput in itemShop.availableItems:
+                    print(f"{itemInput} is added")
+                    player.inventory.items.append(itemInput)
 
                 # If there is no asked item in allowed items, then it will not add
                 else:
-                    print("Item isn't added")
+                    print(f"{itemInput} isn't added because it isn't in ")
         else:
             print("At current time there is no available items")
             print("Bringing you back to main menu in few seconds.....")

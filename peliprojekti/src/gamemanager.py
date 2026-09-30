@@ -9,6 +9,7 @@ class GameManager:
         self.players = []
         self.ui_control = UI()
         self.itemShop = ItemShop()
+        self.startRoom = None
 
     def LogIn(self):
         succesfullRegistration = False

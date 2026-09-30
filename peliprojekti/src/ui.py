@@ -7,6 +7,7 @@ class UI:
         print("1 - Add item to inventory")
         print("2 - Check your inventory")
         print("3 - Delete item from your inventory")
+        #print("4 - Enter the castle")
         print("4 - Leave the game")
         playerChoice = input("What will you choose? \n")
         match playerChoice:
@@ -63,15 +64,18 @@ class UI:
         self.DrawMainMenu(player, gameManager)
 
     def InventoryUI(self, player, gameManager):
-        if len(player.inventory.items) > 0:
-            player.inventory.ListInventoryItems()
-        else:
-            print("Unfortunately you don't have any items")
+        player.inventory.ListInventoryItems()
         time.sleep(1.8)
         self.DrawMainMenu(player, gameManager)
-    
+
+
+    def DrawCastle(self, player, gameManager, room):
+        # for x in 
+        pass
+
+
+    #TODO Make admin menu if i want
     def DrawAdminMenu(self):
         print("-----ADMIN MENU-----")
         print("1 - Check target player's inventory:")
         print("Leave admin menu")
-        pass

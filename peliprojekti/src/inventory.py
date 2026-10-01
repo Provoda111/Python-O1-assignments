@@ -10,6 +10,7 @@ class Inventory:
                     print(f"| Item No {self.items.index(item) + 1} - {item.name} |\n| Price: {item.price} coins |\n| Description: {item.description} |\n")
             else:
                 print(f"You don't have anything")
+                
         def AddItem(self, item):
             #TODO make method in gamemanager.py??? for this tuple-list manipulation
             tmpList = list(self.items)

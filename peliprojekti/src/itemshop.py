@@ -13,13 +13,14 @@ class ItemShop:
         tempList = list(self.availableItems)
         tempList.append(itemToAdd)
         self.availableItems = tuple(tempList)
-        print(f"Succesfully added Item '{itemToAdd.name}'")
+        print(f"Succesfully added {itemToAdd.name} to shop")
 
     # Removes a specified (target) item. 
     def RemoveItem(self, targetItem):
         tempList = list(self.availableItems)
         tempList.remove(targetItem)
         self.availableItems = tuple(self.availableItems)
+        print(f"Succesfully removed {targetItem} from shop")
 
     def GetItemIndex(self, itemName):
         for item in self.availableItems:

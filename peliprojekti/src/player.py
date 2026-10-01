@@ -7,6 +7,10 @@ class Player:
         self.name = name
         self.age = age
         self.inventory = Inventory(self)
+        self.actualRoom = None
 
-    def Attack(self, weapon):
+    def ChangeRoom(self, room):
+        self.actualRoom = room
+
+    def UpdateInventory(self):
         pass

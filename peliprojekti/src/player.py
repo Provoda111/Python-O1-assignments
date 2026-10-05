@@ -11,6 +11,7 @@ class Player:
 
     def ChangeRoom(self, room):
         self.actualRoom = room
+        print(f"You have entered a room {self.actualRoom.name} | Description: {self.actualRoom.description}")
 
-    def UpdateInventory(self):
+    def SaveProgress(self):
         pass

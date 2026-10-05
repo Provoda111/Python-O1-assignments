@@ -36,3 +36,8 @@ class Inventory:
             for item in self.items:
                 if itemName == item.name:
                     return True
+
+        def GetItemByName(self, itemName):
+            for item in self.items:
+                if itemName == item.name:
+                    return item

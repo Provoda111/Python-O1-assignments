@@ -12,21 +12,14 @@ class UI:
             playerChoice = input("What will you select:\n")
             match playerChoice:
                 case 1 | "1":
-                    print("You chose 1 - Enter the item shop\n")
                     self.AddItemUI(gameManager, player)
                 case 2 | "2":
-                    print("You chose 2 - Check your inventory\n")
                     self.InventoryUI(player, gameManager)
                 case 3 | "3":
-                    print("You chose 3 - Enter the castle\n")
                     self.DrawCastle(player, gameManager)
                 case 4 | "4":
-                    print("You chose 4 - Leave the game\n")
                     #TODO Save game progress to the JSON file
                     os.abort()
-                case "Admin" | "admin":
-                    print("You've entered admin mode")
-                    self.DrawAdminMenu()
                 case _:
                     print("Invalid input. Try again")
                 
@@ -57,6 +50,7 @@ class UI:
                 # If there is no asked item in allowed items, then it will not add
                 else:
                     print(f"{selectedItem} isn't added because it isn't in available items\n")
+        # If there is no items
         else:
             print("At current time there is no available items\n")
         print("Bringing you back to main menu in few seconds.....")
@@ -74,29 +68,58 @@ class UI:
                         print("Write an item name to delete it")
                         selectedItem = input("\n")
                         if player.inventory.ItemIsInInventory(selectedItem):
-                            player.inventory.RemoveItem(selectedItem)
+                            player.inventory.RemoveItem(player.inventory.GetItemByName(selectedItem))
                     case _:
                         print("Unknown response")
             except Exception as error:
-                print("Error happened: " + error)
+                print(f"Error happened: {error}")
         print("Returning to the main menu.....")
         time.sleep(1.8)
         self.DrawMainMenu(player, gameManager)
 
     # Draws a castle room for the player for example to choose if he wants to go forward, or back and etc.
     def DrawCastle(self, player, gameManager):
-        roomsToPrint = str()
-        for room in gameManager.rooms:
-            roomsToPrint = roomsToPrint + " " + room.icon
-        playersActualRoom = gameManager.rooms.index(player.actualRoom) + 1
-        print(roomsToPrint)
-        print(" " * playersActualRoom + "↑")
-        print(" " * playersActualRoom + "Player")
-        #TODO Draw player's actual room by using arrow pointing up, and under the arrow is text "Player"
-        
+        self.DrawRooms(player, gameManager)
+        print("-----MENU-----")
+        print("1 - Go forward")
+        print("2 - Go back")
+        print("3 - Back to the main menu")
+        while True:
+            try:
+                playerChoice = input("What will you select? ")
+                match playerChoice:
+                    case "1" | 1:
+                        if gameManager.rooms.index(player.actualRoom) < len(gameManager.rooms):
+                            player.ChangeRoom(gameManager.rooms[gameManager.rooms.index(player.actualRoom) + 1])
+                        else:
+                            print("Can't go any forward")
+                    case "2" | 2:
+                        if gameManager.rooms.index(player.actualRoom) > 0:
+                            player.ChangeRoom(gameManager.rooms[gameManager.rooms.index(player.actualRoom) - 1])
+                        else:
+                            print("Can't go any backwards")
+                    case "3" | 3:
+                        print("Going back to the main menu....")
+                    case _:
+                        print("Wrong input. Try again")
+            except Exception as error:
+                print(f"Error happened. Error: {error}. Try again")
 
-    #TODO Make admin menu if i want
-    def DrawAdminMenu(self):
-        print("-----ADMIN MENU-----")
-        print("1 - Check target player's inventory:")
-        print("Leave admin menu")
+    def DrawRooms(self, player, gameManager):
+        rooms_list = []
+        for room in gameManager.rooms:
+            rooms_list.append(room.icon)
+            
+        roomsToPrint = " ".join(rooms_list)
+        print(roomsToPrint)
+        
+        current_index = gameManager.rooms.index(player.actualRoom)
+        offset = 0
+        for i in range(current_index):
+            offset += len(gameManager.rooms[i].icon) + 1
+                
+        room_icon_len = len(player.actualRoom.icon)
+        pointer_offset = offset + (room_icon_len // 2)
+            
+        print(" " * pointer_offset + "↑")
+        print(" " * pointer_offset + "Player")

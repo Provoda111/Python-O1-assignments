@@ -1,6 +1,6 @@
 class ItemShop:
     def __init__(self):
-        self.availableItems = tuple()
+        self.availableItems = list()
         
 
     # Returns a player a list of the available items
@@ -10,16 +10,12 @@ class ItemShop:
 
     # Adds a specified item into item shop's available items
     def AddItemToShop(self, itemToAdd):
-        tempList = list(self.availableItems)
-        tempList.append(itemToAdd)
-        self.availableItems = tuple(tempList)
+        self.availableItems.append(itemToAdd)
         print(f"Succesfully added {itemToAdd.name} to shop")
 
     # Removes a specified (target) item. 
     def RemoveItem(self, targetItem):
-        tempList = list(self.availableItems)
-        tempList.remove(targetItem)
-        self.availableItems = tuple(self.availableItems)
+        self.availableItems.remove(targetItem)
         print(f"Succesfully removed {targetItem} from shop")
 
     def GetItemIndex(self, itemName):

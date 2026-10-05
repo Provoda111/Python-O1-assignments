@@ -50,7 +50,8 @@ class UI:
                 # If there is no asked item in allowed items, then it will not add
                 else:
                     print(f"{selectedItem} isn't added because it isn't in available items\n")
-        # If there is no items
+        
+        # If there is no items in shop
         else:
             print("At current time there is no available items\n")
         print("Bringing you back to main menu in few seconds.....")
@@ -58,7 +59,11 @@ class UI:
         self.DrawMainMenu(player, gameManager)
 
     def InventoryUI(self, player, gameManager):
+
+        # Lists all items in player's inventory
         player.inventory.ListInventoryItems()
+
+        # If player has any of the items
         if player.inventory.items:
             try:
                 print("Do you wish to delete item? (Yes/No)")
@@ -67,7 +72,11 @@ class UI:
                     case "Yes":
                         print("Write an item name to delete it")
                         selectedItem = input("\n")
+
+                        # If the target item is in player's inventory
                         if player.inventory.ItemIsInInventory(selectedItem):
+
+                            # Deletes the target item
                             player.inventory.RemoveItem(player.inventory.GetItemByName(selectedItem))
                     case _:
                         print("Unknown response")
@@ -89,21 +98,27 @@ class UI:
                 playerChoice = input("What will you select? ")
                 match playerChoice:
                     case "1" | 1:
+                        # Prevents player to go out of range
                         if gameManager.rooms.index(player.actualRoom) < len(gameManager.rooms):
                             player.ChangeRoom(gameManager.rooms[gameManager.rooms.index(player.actualRoom) + 1])
                         else:
                             print("Can't go any forward")
                     case "2" | 2:
+                        # Prevents player getting to the last room [-1] in castle
                         if gameManager.rooms.index(player.actualRoom) > 0:
                             player.ChangeRoom(gameManager.rooms[gameManager.rooms.index(player.actualRoom) - 1])
                         else:
                             print("Can't go any backwards")
                     case "3" | 3:
                         print("Going back to the main menu....")
+                        break
                     case _:
                         print("Wrong input. Try again")
+                self.DrawRooms(player, gameManager)
             except Exception as error:
                 print(f"Error happened. Error: {error}. Try again")
+        time.sleep(1.8)
+        self.DrawMainMenu(player, gameManager)
 
     def DrawRooms(self, player, gameManager):
         rooms_list = []

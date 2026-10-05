@@ -13,8 +13,26 @@ class GameManager:
         self.ui_control = UI()
         self.itemShop = ItemShop()
         self.startRoom = None
-        self.rooms = tuple()
+        self.rooms = list()
         self.itemsInGame = []
+
+    def CreateFirstItems(self):
+            # Adding to game melee weapon's
+            self.itemShop.AddItemToShop(Item("Dagger", "Attack", 25, "Cool melee weapon"))
+            self.AddItemToGame(Item("Dagger", "Attack", 25, "Cool melee weapon"))
+            self.itemShop.AddItemToShop(Item("Sword", "Attack",45, "Cool and strong melee weapon"))
+            self.AddItemToGame(Item("Sword", "Attack",45, "Cool and strong melee weapon"))
+
+            # Adding to game a key 
+            #TODO FUNCTIONALITY FOR KEY
+            self.AddItemToGame(Item("Key", "Misc.", 0, "Secret key"))
+
+
+    def AddItemToGame(self, item):
+        self.itemsInGame.append(item)
+        
+    def CreateRooms(self):
+        self.rooms += [Room("Lobby", "First room in castle", "L", False), Room("Visitor's bedroom", "Visitors can sleep here", "VB1", False), Room("Main bedroom", "There is a story, that here is sleeping prince of the castle", "MB1", False), Room("Armory", "Here is all weapons of this castle", "A", False), Room("Throne", "King is here", "Thr", True)]
 
     # Creates a player character to the game
     def LogIn(self):
@@ -39,13 +57,11 @@ class GameManager:
         # Adds a new player to the game and lists
     def AddPlayer(self, playerNameInput, playerAgeInput):
         newPlayer = Player(playerNameInput, playerAgeInput)
-        newPlayer.playerInfo = {
+        newPlayer.info = {
             "Name" : playerNameInput,
             "Age"  : playerAgeInput }
         self.players.append(newPlayer)
 
-        # Player will be in "Lobby" rpp,
-        newPlayer.actualRoom = self.rooms[0]
         self.InitGame(newPlayer)
 
     def DeletePlayer(self, targetPlayer):
@@ -54,23 +70,17 @@ class GameManager:
         else:
             print("There's no such a player")
 
-    def CreateFirstItems(self):
-        newItem = Item("Dagger", 25, "Cool melee weapon")
-        self.itemShop.AddItemToShop(newItem)
-        self.itemsInGame.append(newItem)
-        newItem = Item("Sword", 45, "Cool and strong melee weapon")
-        self.itemShop.AddItemToShop(newItem)
-        self.itemsInGame.append(newItem)
-    
-    def CreateRooms(self):
-        tmpList = list(self.rooms)
-        tmpList.extend([Room("Lobby", "First room in castle", "L", False), Room("Visitor's bedroom", "Visitors can sleep here", "VB1", False), Room("Main bedroom", "There is a story, that here is sleeping prince of the castle", "MB1", False), Room("Armory", "Here is all weapons of this castle", "A", False), Room("Throne", "King is here", "Thr", True)])
-        self.rooms = tuple(tmpList)
-
     # Launches all required for game methods (example creates first item's in item shop)
     def InitGame(self, player):
         print("Initializing the game")
         self.CreateFirstItems()
         self.CreateRooms()
+
+        # Player will be in "Lobby" room
         player.actualRoom = self.rooms[0]
         self.ui_control.DrawMainMenu(player, self)
+
+    def GetItemByName(self, itemName):
+        for item in self.itemsInGame:
+            if itemName == item.name:
+                return item
